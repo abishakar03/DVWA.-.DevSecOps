@@ -10,23 +10,23 @@ jobs:
   security:
     runs-on: ubuntu-latest
 
+    env:
+      MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
+
     steps:
       - name: Checkout source code
         uses: actions/checkout@v4
 
-      # 1. SAST
       - name: Run Semgrep SAST
         uses: semgrep/semgrep-action@v1
         with:
           config: p/auto
 
-      # 2. Secrets Scanning
       - name: Run Gitleaks
         uses: gitleaks/gitleaks-action@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # 3. Dependency / SCA Scanning
       - name: Run Dependency / SCA Scan
         uses: aquasecurity/trivy-action@master
         with:
@@ -38,11 +38,14 @@ jobs:
           ignore-unfixed: true
           severity: "CRITICAL,HIGH"
 
-      # 4. Build Docker Image
+      - name: Verify encrypted secret
+        run: |
+          test -n "$MYSQL_PASSWORD"
+          echo "GitHub encrypted secret is configured successfully."
+
       - name: Build Docker image
         run: docker build -t dvwa-security:latest .
 
-      # 5. Container Image Scanning
       - name: Run Trivy container scan
         uses: aquasecurity/trivy-action@master
         with:
