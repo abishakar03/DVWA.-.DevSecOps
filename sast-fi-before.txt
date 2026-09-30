@@ -1,0 +1,13 @@
+                  
+                  
+┌────────────────┐
+│ 1 Code Finding │
+└────────────────┘
+                                           
+  [36m[22m[24m  sast-fi-baseline\low.php[0m
+   ❯❯❱ php-unvalidated-file-inclusion-input
+          [31m[1m[24m❰❰ Blocking ❱❱[0m
+          User-controlled GET input is assigned directly to a file inclusion variable
+                                                                                     
+            4┆ $file = $_GET[ 'page' ];
+
