@@ -1,0 +1,39 @@
+                   
+                   
+┌─────────────────┐
+│ 4 Code Findings │
+└─────────────────┘
+                                        
+  [36m[22m[24m  sast-baseline\low.php[0m
+    ❯❱ php.lang.security.injection.tainted-exec.tainted-exec
+          [31m[1m[24m❰❰ Blocking ❱❱[0m
+          User input is passed to a function that executes a shell command. This can lead to remote code
+          execution.                                                                                    
+          Details: https://sg.run/kxEEz                                                                 
+                                                                                                        
+           10┆ $cmd = shell_exec( 'ping  ' . $target );
+   
+   ❯❯❱ php.lang.security.tainted-exec.tainted-exec
+          [31m[1m[24m❰❰ Blocking ❱❱[0m
+          Executing non-constant commands. This can lead to command injection. You should use
+          `escapeshellarg()` when using command.                                             
+          Details: https://sg.run/JAkP                                                       
+                                                                                             
+           10┆ $cmd = shell_exec( 'ping  ' . $target );
+   
+    ❯❱ php.lang.security.injection.tainted-exec.tainted-exec
+          [31m[1m[24m❰❰ Blocking ❱❱[0m
+          User input is passed to a function that executes a shell command. This can lead to remote code
+          execution.                                                                                    
+          Details: https://sg.run/kxEEz                                                                 
+                                                                                                        
+           14┆ $cmd = shell_exec( 'ping  -c 4 ' . $target );
+   
+   ❯❯❱ php.lang.security.tainted-exec.tainted-exec
+          [31m[1m[24m❰❰ Blocking ❱❱[0m
+          Executing non-constant commands. This can lead to command injection. You should use
+          `escapeshellarg()` when using command.                                             
+          Details: https://sg.run/JAkP                                                       
+                                                                                             
+           14┆ $cmd = shell_exec( 'ping  -c 4 ' . $target );
+
