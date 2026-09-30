@@ -1,0 +1,7 @@
+rules:
+  - id: php-unvalidated-file-inclusion-input
+    languages:
+      - php
+    message: "User-controlled GET input is assigned directly to a file inclusion variable"
+    severity: ERROR
+    pattern: $FILE = $_GET[...];
